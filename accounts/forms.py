@@ -24,6 +24,7 @@ class UserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+    
 
 class UserChangeForm(forms.ModelForm):
     password= ReadOnlyPasswordHashField(help_text= 'you can change password using<a href=\"../password\"> this form</a>.')
@@ -31,3 +32,12 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model= User
         fields= ('email', 'phone_number', 'full_name', 'password', 'last_login')     
+
+
+class UserRegistrationForm(forms.Form):
+    email= forms.EmailField()
+    full_name= forms.CharField(label= 'full name')
+    phone_number= forms.CharField(label= 'phone number', max_length= 11)
+    password= forms.CharField(widget= forms.PasswordInput)
+
+
