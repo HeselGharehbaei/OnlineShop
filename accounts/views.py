@@ -5,6 +5,8 @@ import random
 from utils import send_otp_code
 from .models import OtpCode, User
 from django.contrib import messages
+from django.utils import timezone
+from datetime import timedelta
 
 
 class UserRegisterView(View):
@@ -33,22 +35,30 @@ class UserRegisterView(View):
 
 class UserRegisterVerifyCodeView(View):
     form_class= VerifyCodeForm
-    
+    registeration_form= UserRegistrationForm
+
     def get(self, request):
         form= self.form_class
         return render(request, 'accounts/verify.html', {'form': form})
     def post(self, request):
         user_session= request.session['user_registration_info']
         code_instance= OtpCode.objects.get(phone_number= user_session['phone_number'])
+        code_expired_time= code_instance.created + timedelta(minutes=1)
+        now= timezone.now()
         form= self.form_class(request.POST)
         if form.is_valid():
             cd= form.cleaned_data
             if cd['code']== code_instance.code:
-                User.objects.create_user(user_session["phone_number"], user_session["email"], 
-                                         user_session["full_name"], user_session["password"])
-                code_instance.delete()
-                messages.success(request, "you registred", 'success')
-                return redirect('home:home')
+                if now<=code_expired_time:               
+                    User.objects.create_user(user_session["phone_number"], user_session["email"], 
+                                            user_session["full_name"], user_session["password"])
+                    code_instance.delete()
+                    messages.success(request, "you registred", 'success')
+                    return redirect('home:home')
+                else:
+                    code_instance.delete()
+                    messages.error(request, "this code is expired try again", 'danger')
+                    return redirect('accounts:user_register')
             else:
                 messages.error(request, "this code is wrong", 'danger')
                 return redirect('accounts:verify_code')
