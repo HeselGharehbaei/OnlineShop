@@ -7,7 +7,7 @@ from .models import OtpCode, User
 from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 class UserRegisterView(View):
@@ -85,4 +85,11 @@ class UserLoginView(View):
                 return redirect('home:home')
             else:
                 messages.error(request, 'phone number or password is wrong', 'danger')
-        return render(request, self.login_tempelate, {'form':form})                
+        return render(request, self.login_tempelate, {'form':form})   
+
+
+class UserLogoutView(View):
+    def get(self, request):
+        logout(request)
+        messages.success(request, 'logging out successfully', 'success')
+        return redirect("home:home")              
