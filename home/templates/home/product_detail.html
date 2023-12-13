@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_headers %}
+<link rel="stylesheet" href= "{% static 'home/css/style.css' %}">
+{% endblock extra_headers %}
+
+{% block content %}   
+    <img src="{{ product.image.url }}"></br>
+    <h3>{{ product.name }}</h3>
+    <h5>{{ product.price }} $</h5>
+    <h5>{{ product.description }}</h5>
+    <small>{{ product.created_at }}</small>                          
+{% endblock %}

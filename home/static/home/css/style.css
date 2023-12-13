@@ -1,3 +1,9 @@
 h3{
     color: rgb(226, 43, 89);
 }
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; 
+}
