@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import UserRegistrationForm, VerifyCodeForm
+from .forms import UserRegistrationForm, VerifyCodeForm, UserLoginForm
 import random
 from utils import send_otp_code
 from .models import OtpCode, User
 from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
+from django.contrib.auth import authenticate, login
 
 
 class UserRegisterView(View):
@@ -63,4 +64,25 @@ class UserRegisterVerifyCodeView(View):
                 messages.error(request, "this code is wrong", 'danger')
                 return redirect('accounts:verify_code')
         return redirect('home:home')    
- 
+    
+
+class UserLoginView(View):
+    form_class= UserLoginForm
+    login_tempelate= 'accounts/login.html'
+
+    def get(self, request):
+        form= self.form_class
+        return render(request, self.login_tempelate, {'form': form})
+    
+    def post(self, request):
+        form= self.form_class(request.POST)
+        if form.is_valid():
+            login_data= form.cleaned_data
+            user= authenticate(phone_number= login_data['phone_number'], password= login_data['password'])
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'logging in successfully', 'success')
+                return redirect('home:home')
+            else:
+                messages.error(request, 'phone number or password is wrong', 'danger')
+        return render(request, self.login_tempelate, {'form':form})                
