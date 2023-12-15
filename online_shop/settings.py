@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
-    'accounts.apps.AccountsConfig'
+    'accounts.apps.AccountsConfig',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,14 @@ MEDIA_ROOT= BASE_DIR/'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL= 'accounts.User'
+
+
+# ARVAN CLOUD STORAGES
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
+AWS_ACCESS_KEY_ID = '8d1d87a2-f20e-4c0d-937c-14274f21b2f1'
+AWS_SECRET_ACCESS_KEY = '679247ecf79d57e28f0e1ac3925aadc3d4432ac005a1bdcf763a7c3713c0e33f'
+AWS_S3_ENDPOINT_URL = "https://s3.ir-thr-at1.arvanstorage.com"
+AWS_STORAGE_BUCKET_NAME = 'hesel-online-shop'
+AWS_SERVICE_NAME = 's3'
+AWS_S3_FILE_OVERWRITE = False
