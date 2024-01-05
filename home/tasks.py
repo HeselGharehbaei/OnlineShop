@@ -14,4 +14,7 @@ def delete_bucket_object_task(key):
 @shared_task
 def download_bucket_object_task(key):
     bucket.download_object(key)
-    
+
+@shared_task
+def upload_bucket_object_task():
+    bucket.upload_object()   

@@ -42,6 +42,12 @@ class Bucket:
         with open(settings.AWS_LOCAL_STORAGE + key, 'wb') as f:
             self.conn.download_fileobj( settings.AWS_STORAGE_BUCKET_NAME, key, f) 
             return True  
-        
+
+    def upload_object(self):
+        bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+        with open(settings.AWS_LOCAL_STORAGE + '/Hawaii.png', "rb") as f:
+            self.conn.upload_fileobj(f, bucket_name, 'Hawaii.png')
+        return True 
+            
 
 bucket = Bucket()        

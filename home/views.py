@@ -39,3 +39,10 @@ class DownloadBucketObj(View):
         messages.success(request, "your object will be download soon", 'info')
         return redirect('home:bucket')
     
+
+class UploadBucketObj(View):
+    def get(self, request):
+        tasks.upload_bucket_object_task()
+        messages.success(request, "your object will be upload soon", 'info')
+        return redirect('home:bucket')
+        
