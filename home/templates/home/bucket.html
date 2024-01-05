@@ -7,8 +7,8 @@
         <th scope="col"></th>
         <th scope="col">Name</th>
         <th scope="col">Size</th>
-        <th scope="col">Download</th>
         <th scope="col">Delete</th>
+        <th scope="col">Download</th>
       </tr>
     </thead>
     <tbody>
@@ -17,8 +17,8 @@
         <th scope="row">{{ forloop.counter }}</th>
         <td>{{ obj.Key }}</td>
         <td>{{ obj.Size| filesizeformat }}</td>
+        <td><a href= {% url "home:delete_obj_bucket" obj.Key %}>delete</a></td>        
         <td><a href= #>download</a></td>
-        <td><a href= #>delete</a></td>
       </tr>
     {% endfor %}   
     </tbody>

@@ -24,4 +24,11 @@ class BucketHome(View):
     def get(self, request):
         objects= tasks.all_bucket_objects_task()
         return render(request, self.bucket_template, {'objects': objects})
+
+
+class DeleteBucketObj(View): 
+    def get(self, request, key):
+        tasks.delete_bucket_object_task(key)
+        messages.success(request, "your object will be delete soon", 'info')
+        return redirect('home:bucket')
     

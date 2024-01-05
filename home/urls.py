@@ -6,6 +6,7 @@ app_name='home'
 
 Backet_urls= [
     path('', views.BucketHome.as_view(), name='bucket'),
+    path('delete_obj/<key>', views.DeleteBucketObj.as_view(), name='delete_obj_bucket'),
 ]
 
 

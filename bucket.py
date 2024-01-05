@@ -28,6 +28,14 @@ class Bucket:
             return result['Contents']
         else:
             return None    
-        
+
+    def delete_object(self, key):
+        try:
+            bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+            self.conn.delete_object(Bucket= bucket_name, Key= key)
+            return True
+        except ClientError as e:
+            logging.error(e)    
+
 
 bucket = Bucket()        
