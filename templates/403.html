@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        .container {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .emoji {
+            font-size: 8rem;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            font-size: 1.25rem;
+            padding: 10px 20px;
+        }
+    </style>
+<body>
+    <div class="container">
+        <div class="emoji">⛔</div>
+        <h1>Oops! 403 Error</h1>
+        <p>Permission denied</p>
+        <a class="btn btn-primary" href="/">Go back to Home</a>
+    </div>
+</body>
+{% endblock %}
